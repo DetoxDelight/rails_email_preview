@@ -124,10 +124,12 @@ module RailsEmailPreview
       else
         body_content = body_part.body.to_s
 
+        mail.attachments = [] unless mail.attachments.present?
+        
         mail.attachments.each do |attachment|
           web_url = rails_email_preview.rep_raw_email_attachment_url(params[:preview_id], attachment.filename)
           body_content.gsub!(attachment.url, web_url)
-        end if mail.attachments.present?
+        end 
 
         body_content.html_safe
       end
